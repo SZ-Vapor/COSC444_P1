@@ -16,10 +16,11 @@ public class COSC444_P1 extends RecursiveAction {
 
     private static int[][] imgArr;//2D array of RGB int values
     private static BufferedImage img;//Image that user inputs to find Waldo and Co.
-    int threadNumber;
+    int threadNumber;//used with compute() method to determine what tasks/methods to run
 
     /**
-     * @param threadNum
+     * Constructor
+     * @param threadNum used to determine what findX() method to run
      */
     public COSC444_P1(int threadNum) {
         threadNumber = threadNum;
@@ -63,19 +64,19 @@ public class COSC444_P1 extends RecursiveAction {
     @Override
     protected synchronized void compute() {
 
-        if (threadNumber == 1) {
+        if (threadNumber == 1) {//runs findWaldo() when threadNumber from constructor is 1
             findWaldo();
         }
-        if (threadNumber == 2) {
+        if (threadNumber == 2) {//runs findWilma() when threadNumber from constructor is 2
             findWilma();
         }
-        if (threadNumber == 3) {
+        if (threadNumber == 3) {//runs findOdlaw() when threadNumber from constructor is 3
             findOdlaw();
         }
-        if (threadNumber == 4) {
+        if (threadNumber == 4) {//runs findWizard() when threadNumber from constructor is 4
             findWizard();
         }
-        if (threadNumber == 5) {
+        if (threadNumber == 5) {//runs findWoof() when threadNumber from constructor is 5
             findWoof();
         }
 
@@ -102,7 +103,6 @@ public class COSC444_P1 extends RecursiveAction {
      * finds the pixel representation of Waldo
      */
     private void findWaldo() {
-
         Color waldo[][] = new Color[2][2];
         waldo[0][0] = new Color(238, 21, 32);//upper-left pixel color
         waldo[0][1] = new Color(255, 255, 255);//upper-right pixel color
@@ -197,7 +197,7 @@ public class COSC444_P1 extends RecursiveAction {
                 if (imgArr[j][i] == woof[0][0].getRGB()) {//finds a match for the color of the upper-left pixel, and then checks the surrounding pixels to see if they match all the RGB values declared above
                     if (imgArr[j + 1][i] == woof[0][1].getRGB() && imgArr[j][i + 1] == woof[1][0].getRGB() && imgArr[j + 1][i + 1] == woof[1][1].getRGB()) {
                         System.out.println("Woof found at: (" + i + "," + " " + j + ") by thread ID: " + Thread.currentThread().getId());//Prints x and y coordinates of Woof in the image, as well as the thread ID
-
+                        break;
                     }
                 }
             }
